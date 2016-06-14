@@ -35,6 +35,22 @@ public struct Matrix {
     }
 }
 
+//: ### function printMatrix prints out the matrix in row form
+
+func printMatrix(a:Matrix){
+    //to provide a printout similar to algebra texts start index at 1 instead of 0
+    //for printout
+    let rows=a.rows
+    let columns=a.columns
+    for j in 1...rows{
+        for i in 1...columns{
+            print("[\(j),\(i)]=\(a[j,i])  ", terminator:"")
+        }
+        print("\n")
+    }
+}
+
+
 //C=A*B D=BT*AT C=DT
 var A = Matrix(rows: 3,columns: 3)
 
@@ -48,7 +64,8 @@ A[3, 1] = 2.0
 A[3, 2] = 1.0
 A[3, 3] = 3.0
 
-print("A=\(A)")
+print("A matrix")
+printMatrix(A)
 
 var B = Matrix(rows: 3,columns: 3)
 
@@ -62,8 +79,8 @@ B[3, 1] = 4.0
 B[3, 2] = 6.0
 B[3, 3] = 5.0
 
-print("B=\(B)")
-
+print("B matrix")
+printMatrix(B)
 
 //: ### This function multiplies 2 matices.
 
@@ -97,10 +114,13 @@ guard myRows1 == myColumns2 else {
     return out
 }
 
+
 var C = A * B
 print("\n")
 print("C=A*B\n")
-print("C= \(C)")
+    
+print("C matrix")
+printMatrix(C)
 
 
 func transpose (m1: Matrix) -> Matrix {
@@ -140,18 +160,26 @@ func transpose (m1: Matrix) -> Matrix {
 
 
 let AT = transpose(A)
-print("AT=\(AT)")
+print("A transpose matrix")
+printMatrix(AT)
 
 let BT = transpose(B)
-print("BT=\(BT)")
+print("B transpose matrix")
+printMatrix(BT)
+
 
 var D = BT * AT
 print("\n")
 print("D=BT*AT \n")
-print("D= \(D)")
+print("D matrix")
+printMatrix(D)
+
+let DT = transpose(D)
+print("D transpose matrix")
+printMatrix(DT)
+
 //C=A*B D=BT*AT C=DT
 //
-let DT = transpose(D)
 print("\n")
 print("C=A*B D=BT*AT C=DT\n")
 print("C= \(C)")
