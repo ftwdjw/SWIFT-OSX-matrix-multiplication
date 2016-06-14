@@ -130,22 +130,6 @@ func transpose (m1: Matrix) -> Matrix {
   
     var out = Matrix(rows:myColumns1, columns:myRows1)
     
-    /*
-    guard myRows1 == myColumns2 else {
-        //rows of matrix have to equal columns for matrix multiplication
-        print("rows of matrix have to equal columns for matrix multiplication")
-        return out
-    }
-    */
-    
-    //    x Pointer to r1 by c1 input matrix.
-    //    r1 Number of rows in x.
-    //    c1 Number of columns in x. Also number of rows in y. y Pointer to c1 by c2 input matrix.
-    //    c2 Number of columns in y.
-    //    r Pointer to r1 by c2 output matrix.
-    
-
-    
     //multiply the rows of the first matrix by the columns of the second
     for i in 1...myRows1 {
         for j in 1...myColumns1{
@@ -158,13 +142,39 @@ func transpose (m1: Matrix) -> Matrix {
 
 
 
-
 let AT = transpose(A)
 print("A transpose matrix")
 printMatrix(AT)
 
+let ATT = transpose(AT)
+print("A transpose transpose matrix equals A")
+printMatrix(ATT)
+
+
+func areMatricesEqual (a: Matrix, b: Matrix) -> Bool {
+    //This function returns true is 2 input vectors are equal
+    
+    assert(a.rows == b.rows, "Expected matrices of the same size, instead got matrices of two different sizes")
+    
+    var result = false
+    for i in 1...a.rows {
+        for j in 1...a.columns {
+            if a[i,j]==b[i,j]{result=true}
+            else{result=false
+                return result
+            }}
+    }
+    return result
+}
+
+if areMatricesEqual(A, b: ATT){
+    print("A and ATT transpose matrices are equal\n A transpose transpose=A")
+}
+else{print("solution does not check/n")}
+
+
 let BT = transpose(B)
-print("B transpose matrix")
+print("\nB transpose matrix")
 printMatrix(BT)
 
 
@@ -182,8 +192,14 @@ printMatrix(DT)
 //
 print("\n")
 print("C=A*B D=BT*AT C=DT\n")
-print("C= \(C)")
-print("DT= \(DT)")
+
+
+
+if areMatricesEqual(C, b: DT){
+    print("C and D transpose matrices are equal\n C=A*B D=BT*AT C=DT or (AB)T=AT*BT")
+}
+else{print("solution does not check/n")}
+
 //
 ////(AB)T=BT*AT
 //print("\n")
