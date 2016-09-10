@@ -2,6 +2,7 @@
 
 //: Prove:C=A*B D=BT*AT C=DT
 //: where A,B,C and D are matrices and AT,BT and DT are the transposes of A,B, and D
+// tested in xcode 8
 
 import Cocoa
 
@@ -16,7 +17,7 @@ public struct Matrix {
     init(rows: Int, columns: Int) {
         self.rows = rows
         self.columns = columns
-        grid = Array(count: rows * columns, repeatedValue: 0.0)
+        grid = Array(repeating: 0.0, count: rows * columns)
     }
     
     func indexIsValidForRow(row: Int, column: Int) -> Bool {
@@ -25,11 +26,11 @@ public struct Matrix {
     
     subscript(row: Int, column: Int) -> Double {
         get {
-            assert(indexIsValidForRow(row,column: column), "get Index out of range")
+            assert(indexIsValidForRow(row: row,column: column), "get Index out of range")
             return grid[((row-1) * columns) + column - 1]
         }
         set {
-            assert(indexIsValidForRow(row, column: column), "set Index out of range")
+            assert(indexIsValidForRow(row: row, column: column), "set Index out of range")
             grid[((row-1) * columns) + column - 1] = newValue
         }
     }
@@ -65,7 +66,7 @@ A[3, 2] = 1.0
 A[3, 3] = 3.0
 
 print("A matrix")
-printMatrix(A)
+printMatrix(a: A)
 
 var B = Matrix(rows: 3,columns: 3)
 
@@ -80,7 +81,7 @@ B[3, 2] = 6.0
 B[3, 3] = 5.0
 
 print("B matrix")
-printMatrix(B)
+printMatrix(a: B)
 
 //: ### This function multiplies 2 matices.
 
@@ -120,7 +121,7 @@ print("\n")
 print("C=A*B\n")
     
 print("C matrix")
-printMatrix(C)
+printMatrix(a: C)
 
 
 func transpose (m1: Matrix) -> Matrix {
@@ -142,13 +143,13 @@ func transpose (m1: Matrix) -> Matrix {
 
 
 
-let AT = transpose(A)
+let AT = transpose(m1: A)
 print("A transpose matrix")
-printMatrix(AT)
+printMatrix(a: AT)
 
-let ATT = transpose(AT)
+let ATT = transpose(m1: AT)
 print("A transpose transpose matrix equals A")
-printMatrix(ATT)
+printMatrix(a: ATT)
 
 
 func areMatricesEqual (a: Matrix, b: Matrix) -> Bool {
@@ -167,26 +168,26 @@ func areMatricesEqual (a: Matrix, b: Matrix) -> Bool {
     return result
 }
 
-if areMatricesEqual(A, b: ATT){
+if areMatricesEqual(a: A, b: ATT){
     print("A and ATT transpose matrices are equal\n A transpose transpose=A")
 }
 else{print("solution does not check/n")}
 
 
-let BT = transpose(B)
+let BT = transpose(m1: B)
 print("\nB transpose matrix")
-printMatrix(BT)
+printMatrix(a: BT)
 
 
 var D = BT * AT
 print("\n")
 print("D=BT*AT \n")
 print("D matrix")
-printMatrix(D)
+printMatrix(a: D)
 
-let DT = transpose(D)
+let DT = transpose(m1: D)
 print("D transpose matrix")
-printMatrix(DT)
+printMatrix(a: DT)
 
 //C=A*B D=BT*AT C=DT
 //
@@ -195,7 +196,7 @@ print("C=A*B D=BT*AT C=DT\n")
 
 
 
-if areMatricesEqual(C, b: DT){
+if areMatricesEqual(a: C, b: DT){
     print("C and D transpose matrices are equal\n C=A*B D=BT*AT C=DT or (AB)T=AT*BT")
 }
 else{print("solution does not check/n")}
